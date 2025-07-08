@@ -1,46 +1,190 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Carta de Amor Interativa</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Magic Pixel Love Letter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #060035;
+      color: #FFFFFF;
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .envelope {
+      width: 200px;
+      height: 150px;
+      background: #FFF;
+      border: 4px solid #c30000;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #c30000;
+      clip-path: polygon(
+        50% 0%,
+        61% 15%,
+        75% 15%,
+        85% 25%,
+        85% 40%,
+        50% 75%,
+        15% 40%,
+        15% 25%,
+        25% 15%,
+        39% 15%
+      );
+      opacity: 0;
+      animation: float 2s ease-out forwards;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      font-family: 'Press Start 2P', cursive;
+      background: #c30000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      border: 4px solid #c30000;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .popup-content {
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .popup .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+  </style>
 </head>
 <body>
-  <div class="envelope">
-    <div class="letter">
-      <div class="hearts">
-        ❤️ ❤️ ❤️
-      </div>
-    </div>
-  </div>
-  <audio id="bg-music" src="magical-sparkling-orchestral-music-192725 (1).mp3" loop></audio>
+  <div class="envelope" id="envelope"></div>
 
   <div class="buttons">
-    <button id="openBtn">OPEN</button>
-    <button id="resetBtn">RESET</button>
+    <button id="viewContentBtn" class="hidden">VIEW LETTER</button>
   </div>
 
-  <div id="contentBtnContainer" class="hidden">
-    <button id="viewContentBtn">VISUALIZAR CONTEÚDO</button>
-  </div>
+  <audio id="bgMusic" loop>
+    <source src="https://raw.githubusercontent.com/jessicacarolinesdias/MagicDuet/a6770401ff66afb4de3fd10a11d88c4b1dccb78a/relaxing-piano-310597.mp3" type="audio/mp3">
+  </audio>
 
   <div id="popup" class="popup hidden">
     <div class="popup-content">
       <span class="close">&times;</span>
-      <div id="popup-text">
-        <p>Coloque aqui o seu texto lindo da carta! 🌹✨</p>
-      </div>
-      <button id="nextPageBtn">PRÓXIMA PÁGINA</button>
+      <p style="white-space: pre-line;">
+Alex,
+
+I know this is a big moment for us, but it's also a new chance to do amazing things.
+
+Happy 9th! ♥
+
+Love,
+Jess.
+      </p>
+      <button id="nextPageBtn">NEXT PAGE</button>
     </div>
   </div>
 
   <div id="videoPopup" class="popup hidden">
     <div class="popup-content">
-      <span class="closeVideo">&times;</span>
+      <span class="close">&times;</span>
       <iframe src="https://drive.google.com/file/d/1clYZHmA0qERrEFvu1X7Z74ndeN7dNQly/preview" width="640" height="480" allow="autoplay"></iframe>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const envelope = document.getElementById('envelope');
+    const viewContentBtn = document.getElementById('viewContentBtn');
+    const popup = document.getElementById('popup');
+    const videoPopup = document.getElementById('videoPopup');
+    const closeBtns = document.querySelectorAll('.close');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const bgMusic = document.getElementById('bgMusic');
+
+    envelope.addEventListener('click', () => {
+      // Play music
+      bgMusic.play();
+
+      // Show hearts
+      for (let i = 0; i < 10; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = `${envelope.offsetLeft + envelope.offsetWidth/2}px`;
+        heart.style.top = `${envelope.offsetTop}px`;
+        document.body.appendChild(heart);
+
+        heart.innerHTML = '<span style="position:absolute; color:#FFF; font-size:8px; top:20px; left:-5px;">Happy 9th! ♥</span>';
+
+        heart.style.left = `${Math.random() * window.innerWidth}px`;
+
+        setTimeout(() => {
+          heart.remove();
+        }, 2000);
+      }
+
+      // Show view content button
+      viewContentBtn.classList.remove('hidden');
+    });
+
+    viewContentBtn.addEventListener('click', () => {
+      popup.classList.remove('hidden');
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        popup.classList.add('hidden');
+        videoPopup.classList.add('hidden');
+      });
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+      popup.classList.add('hidden');
+      videoPopup.classList.remove('hidden');
+    });
+  </script>
 </body>
 </html>
