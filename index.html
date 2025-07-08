@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Carta de Amor Interativa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="envelope">
+    <div class="letter">
+      <div class="hearts">
+        ❤️ ❤️ ❤️
+      </div>
+    </div>
+  </div>
+  <audio id="bg-music" src="SEU_AUDIO.mp3" loop></audio>
+
+  <div class="buttons">
+    <button id="openBtn">OPEN</button>
+    <button id="resetBtn">RESET</button>
+  </div>
+
+  <div id="contentBtnContainer" class="hidden">
+    <button id="viewContentBtn">VISUALIZAR CONTEÚDO</button>
+  </div>
+
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <div id="popup-text">
+        <p>Coloque aqui o seu texto lindo da carta! 🌹✨</p>
+      </div>
+      <button id="nextPageBtn">PRÓXIMA PÁGINA</button>
+    </div>
+  </div>
+
+  <div id="videoPopup" class="popup hidden">
+    <div class="popup-content">
+      <span class="closeVideo">&times;</span>
+      <iframe src="https://drive.google.com/file/d/1clYZHmA0qERrEFvu1X7Z74ndeN7dNQly/preview" width="640" height="480" allow="autoplay"></iframe>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
