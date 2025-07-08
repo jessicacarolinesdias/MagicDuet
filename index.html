@@ -26,36 +26,16 @@
       cursor: pointer;
     }
 
-    .heart {
+    .pixel-heart {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #c30000;
-      clip-path: polygon(
-        50% 0%,
-        61% 15%,
-        75% 15%,
-        85% 25%,
-        85% 40%,
-        50% 75%,
-        15% 40%,
-        15% 25%,
-        25% 15%,
-        39% 15%
-      );
-      opacity: 0;
-      animation: float 2s ease-out forwards;
+      width: 32px;
+      height: 32px;
+      animation: floatUp 2s ease-out forwards;
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-200px);
-        opacity: 0;
-      }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(1.2); opacity: 0; }
     }
 
     .buttons {
@@ -146,18 +126,16 @@ Jess.
     const bgMusic = document.getElementById('bgMusic');
 
     envelope.addEventListener('click', () => {
-      // Play music
       bgMusic.play();
 
-      // Show hearts
       for (let i = 0; i < 10; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
+        const heart = document.createElement('img');
+        heart.src = 'https://upload.wikimedia.org/wikipedia/commons/4/47/Pixel_Heart.svg';
+        heart.classList.add('pixel-heart');
         heart.style.left = `${envelope.offsetLeft + envelope.offsetWidth/2}px`;
-        heart.style.top = `${envelope.offsetTop}px`;
-        document.body.appendChild(heart);
+        heart.style.top = `${envelope.offsetTop + envelope.offsetHeight/2}px`;
 
-        heart.innerHTML = '<span style="position:absolute; color:#FFF; font-size:8px; top:20px; left:-5px;">Happy 9th! ♥</span>';
+        document.body.appendChild(heart);
 
         heart.style.left = `${Math.random() * window.innerWidth}px`;
 
@@ -166,7 +144,6 @@ Jess.
         }, 2000);
       }
 
-      // Show view content button
       viewContentBtn.classList.remove('hidden');
     });
 
